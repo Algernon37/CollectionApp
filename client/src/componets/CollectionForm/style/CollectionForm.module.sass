@@ -1,0 +1,49 @@
+.control
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    padding: 10px
+    gap: 15px
+    border: 1px solid #0d6efd
+    background: #bbd4fa
+    border-radius: 5px
+    max-width: 600px
+
+.markdownPreview
+    max-width: 100%
+    word-wrap: break-word
+
+.imagePreview
+    max-width: 100%
+    max-height: 100%
+
+.imageContainer
+    max-width: 500px
+    max-height: 500px
+    display: flex
+    justify-content: center
+    align-items: center
+    overflow: hidden
+
+    &__img
+        width: 100%
+        height: auto
+        object-fit: contain
+
+@media (max-width: 768px)
+    .control
+        max-width: 400px
+
+    .imageContainer
+        max-width: 300px
+        max-height: 300px
+
+@media (max-width: 420px)
+    .control
+        width: 300px
+
+    .imageContainer
+        max-width: 200px
+        max-height: 200px
+        

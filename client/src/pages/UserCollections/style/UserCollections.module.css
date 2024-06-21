@@ -1,0 +1,16 @@
+.control {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.userAuthenticated {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}/*# sourceMappingURL=UserCollections.module.css.map */
