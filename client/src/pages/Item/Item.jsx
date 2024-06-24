@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './style/Item.module.sass';
 import { Form, Button, Table, Alert } from 'react-bootstrap';
 import useFetchItemData from '../../hooks/useFetchItemData/useFetchItemData';

@@ -13,6 +13,7 @@ function Navigation() {
         <nav className={style.nav}>
           <Button as={Link} to="/login" variant="primary">Log In</Button>
           <Button as={Link} to="/register" variant="primary">Sign Up</Button>
+          <Button as={Link} to="/" variant="primary">Main page</Button>
         </nav>
       )}
     </div>

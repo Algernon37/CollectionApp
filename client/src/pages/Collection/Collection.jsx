@@ -1,4 +1,3 @@
-import React from 'react';
 import style from './style/Collection.module.sass';
 import { useParams } from 'react-router-dom';
 import AdditionalFieldsForm from '../../componets/AdditionalFieldsForm/AdditionalFieldsForm'

@@ -70,7 +70,8 @@ const useCollectionManagement = () => {
                     text: 3,
                     boolean: 3,
                     date: 3
-                }
+                },
+                itemCount: 0
             });
             setNewCollectionName('');
             setNewDescription('');

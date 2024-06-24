@@ -1,0 +1,19 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  gap: 15px;
+  border-radius: 5px;
+  max-width: 1170px;
+}
+
+@media (max-width: 425px) {
+  .wrapper {
+    width: 300px;
+  }
+  .alertitem {
+    font-size: 16px;
+  }
+}/*# sourceMappingURL=Item.module.css.map */

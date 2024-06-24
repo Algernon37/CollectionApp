@@ -1,4 +1,4 @@
-import { useState, useEffect,useMemo } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { db, getDoc, doc, updateDoc, deleteDoc } from '../../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,10 +36,15 @@ const useFetchItemData = (id, itemId) => {
         };
         fetchData();
     }, [id, itemId, updatedAt]);
-    
+
     const handleDeleteItem = async () => {
         try {
             await deleteDoc(itemRef);
+            const collectionDoc = await getDoc(collectionRef);
+            const collectionData = collectionDoc.data();
+            const currentItemCount = collectionData.itemCount || 0;
+            const newCount = currentItemCount - 1;
+            await updateDoc(collectionRef, { itemCount: newCount });
             console.log('Документ удалён');
             navigate(`/collection/${id}`);
         } catch (error) {

@@ -1,11 +1,12 @@
-import { useState } from 'react';
-import { db, collection, addDoc, updateDoc } from '../../firebaseConfig';
+import { useState,useMemo } from 'react';
+import { db, collection, addDoc, updateDoc,doc, getDoc  } from '../../firebaseConfig';
 
 const useItemFormManagement = (collectionId, fetchItems) => {
     const [itemName, setItemName] = useState('');
     const [fieldValues, setFieldValues] = useState({});
     const [booleanFields, setBooleanFields] = useState({});
     const [integerFields, setIntegerFields] = useState({});
+    const collectionRef = useMemo(() => doc(db, 'collections', collectionId), [collectionId]);
 
     const handleAddItem = async () => {
         if (itemName) {
@@ -21,6 +22,11 @@ const useItemFormManagement = (collectionId, fetchItems) => {
                     id: itemRef.id
                 });
                 console.log("Item successfully added with ID: ", itemRef.id);
+                const collectionDoc = await getDoc(collectionRef);
+                const collectionData = collectionDoc.data();
+                const currentItemCount = collectionData.itemCount || 0;
+                const newCount = currentItemCount + 1;
+                await updateDoc(collectionRef, { itemCount: newCount });
                 setItemName('');
                 setFieldValues({});
                 fetchItems();

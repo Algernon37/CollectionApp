@@ -1,5 +1,4 @@
 import style from "./style/UserCollections.module.sass";
-import React from 'react';
 import CollectionForm from "../../componets/CollectionForm/CollectionForm";
 import useCollectionManagement from '../../hooks/useCollectionManagement/useCollectionManagement';
 import CollectionList from '../../componets/CollectionList/CollectionList'
