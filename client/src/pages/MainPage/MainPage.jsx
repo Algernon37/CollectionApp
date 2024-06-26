@@ -1,17 +1,19 @@
 import style from './style/MainPage.module.sass'
-import React, { useEffect } from 'react';
+import React from 'react';
 import useManageMainPage from '../../hooks/useManageMainPage/useManageMainPage'
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 function MainPage() {
-    const { fetchLatestItems,
-        fetchLargestCollections,
+    const {
         latestItems,
-        setLatestItems,
         largestCollections,
-        setLargestCollections
+        loading
     } = useManageMainPage();
+
+    if (loading) {
+        return <h2>Loading...</h2>;
+    }
 
     return (
         <div>

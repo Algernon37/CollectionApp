@@ -13,6 +13,7 @@ function UserCollections() {
     if (loading) {
         return <h2>Loading...</h2>;
     }
+    
     return (
         <div className={style.wrapper}>
             <div className={style.userAuthenticated}>

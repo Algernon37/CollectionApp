@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 const useManageMainPage = () => {
     const [latestItems, setLatestItems] = useState([]);
     const [largestCollections, setLargestCollections] = useState([]);
+    const [loading, setLoading] = useState(true);
     const collectionsRef = collection(db, 'collections');
 
     async function fetchData() {
@@ -14,8 +15,12 @@ const useManageMainPage = () => {
     }
 
     useEffect(() => {
-        fetchData();
-    }, []);
+        if (latestItems || largestCollections) {
+            fetchData();
+        } else {
+            setLoading(false);
+        }
+    }, [latestItems,largestCollections]);
 
     async function fetchLatestItems() {
         try {
@@ -45,6 +50,7 @@ const useManageMainPage = () => {
         try {
             const querySnapshot = await getDocs(query(collectionsRef, orderBy('itemCount', 'desc'), limit(5)));
             const collections = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setLoading(false);
             return collections;
         } catch (error) {
             console.error("Ошибка при получении самых больших коллекций:", error);
@@ -53,12 +59,9 @@ const useManageMainPage = () => {
     }
 
     return {
-        fetchLatestItems,
-        fetchLargestCollections,
         latestItems,
-        setLatestItems,
         largestCollections,
-        setLargestCollections
+        loading
     };
 }
 export default useManageMainPage;
