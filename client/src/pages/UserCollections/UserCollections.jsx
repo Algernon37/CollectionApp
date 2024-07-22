@@ -5,15 +5,16 @@ import CollectionList from '../../componets/CollectionList/CollectionList'
 import Button from 'react-bootstrap/Button';
 
 function UserCollections() {
-    const { collections,newCollectionName,newDescription,newTheme,otherTheme,
-        loading,user,showForm, imagePreview, handleImageChange, addCollection,deleteCollection,handleSignOut,
-        setNewCollectionName,setNewDescription,setNewTheme,setOtherTheme,
+    const { collections, newCollectionName, newDescription, newTheme, otherTheme,
+        loading, user, showForm, imagePreview, handleImageChange, addCollection,
+        deleteCollection, handleSignOut, handleGoToMain,
+        setNewCollectionName, setNewDescription, setNewTheme, setOtherTheme,
         toggleForm } = useCollectionManagement();
 
     if (loading) {
         return <h2>Loading...</h2>;
     }
-    
+
     return (
         <div className={style.wrapper}>
             <div className={style.userAuthenticated}>
@@ -22,7 +23,10 @@ function UserCollections() {
                 ) : (
                     <h2>The user is not authenticated.</h2>
                 )}
-                <Button onClick={handleSignOut}>Go out</Button>
+                <div className={style.buttons}>
+                    <Button onClick={handleSignOut}>Go out</Button>
+                    <Button onClick={handleGoToMain}>Go to Main page</Button>
+                </div>
             </div>
             {showForm ? (
                 <CollectionForm

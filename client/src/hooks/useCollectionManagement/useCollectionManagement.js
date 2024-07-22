@@ -1,8 +1,8 @@
-import {db, auth, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, ref, uploadBytes, getDownloadURL,storage  } from "../../firebaseConfig";
+import { db, auth, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, ref, uploadBytes, getDownloadURL, storage } from "../../firebaseConfig";
 import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
- 
+
 const useCollectionManagement = () => {
     const [collections, setCollections] = useState([]);
     const [newCollectionName, setNewCollectionName] = useState('');
@@ -57,6 +57,7 @@ const useCollectionManagement = () => {
                 await uploadBytes(imageRef, image);
                 imageUrl = await getDownloadURL(imageRef);
             }
+            console.log(auth.currentUser);
             await addDoc(collectionsRef, {
                 name: newCollectionName,
                 userId: auth.currentUser.uid,
@@ -64,6 +65,7 @@ const useCollectionManagement = () => {
                 theme: otherTheme ? otherTheme : newTheme,
                 imageUrl: imageUrl,
                 tableFields: [],
+                author: auth.currentUser.email || 'Unknown',
                 fieldLimits: {
                     string: 3,
                     integer: 3,
@@ -71,7 +73,8 @@ const useCollectionManagement = () => {
                     boolean: 3,
                     date: 3
                 },
-                itemCount: 0
+                itemCount: 0,
+                createdAt: new Date()
             });
             setNewCollectionName('');
             setNewDescription('');
@@ -112,6 +115,15 @@ const useCollectionManagement = () => {
         }
     };
 
+    const handleGoToMain = async () => {
+        try {
+            console.log("Пользователь ушёл на главную странциу");
+            navigate('/');
+        } catch (error) {
+            console.error("Ошибка при переходе на главную страницу:", error);
+        }
+    };
+
     const toggleForm = () => {
         setShowForm(!showForm);
     };
@@ -142,6 +154,7 @@ const useCollectionManagement = () => {
         addCollection,
         deleteCollection,
         handleSignOut,
+        handleGoToMain,
         setNewCollectionName,
         setNewDescription,
         setNewTheme,

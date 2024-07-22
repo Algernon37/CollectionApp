@@ -12,15 +12,12 @@ const useManageMainPage = () => {
         setLatestItems(items);
         const collections = await fetchLargestCollections();
         setLargestCollections(collections);
+        setLoading(false);
     }
 
     useEffect(() => {
-        if (latestItems || largestCollections) {
-            fetchData();
-        } else {
-            setLoading(false);
-        }
-    }, [latestItems,largestCollections]);
+        fetchData();
+    }, []);
 
     async function fetchLatestItems() {
         try {
@@ -35,7 +32,10 @@ const useManageMainPage = () => {
                 const itemsQuery = query(itemsRef, orderBy('createdAt', 'desc'), limit(5));
                 const itemsSnapshot = await getDocs(itemsQuery);
 
-                return itemsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+                return itemsSnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }));
             });
 
             const itemsArray = await Promise.all(itemsPromises);
@@ -45,19 +45,17 @@ const useManageMainPage = () => {
             return [];
         }
     }
-
+    
     async function fetchLargestCollections() {
         try {
             const querySnapshot = await getDocs(query(collectionsRef, orderBy('itemCount', 'desc'), limit(5)));
             const collections = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setLoading(false);
             return collections;
         } catch (error) {
             console.error("Ошибка при получении самых больших коллекций:", error);
             return [];
         }
     }
-
     return {
         latestItems,
         largestCollections,

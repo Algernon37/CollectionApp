@@ -14,7 +14,16 @@ function Entry({ authFunction, nameButton }) {
     e.preventDefault();
     const operation = authFunction === 'signIn' ? signInWithEmailAndPassword : createUserWithEmailAndPassword;
     operation(auth, email, password)
-      .then(() => {
+      .then((userCredential) => {
+        if (authFunction === 'signUp' && displayName) {
+          updateProfile(userCredential.user, {
+            displayName: displayName
+          }).then(() => {
+            console.log('Display name set to:', displayName);
+          }).catch((error) => {
+            console.error('Error updating display name:', error);
+          });
+        }
         navigate('/UsersCollections');
       })
       .catch((error) => {
