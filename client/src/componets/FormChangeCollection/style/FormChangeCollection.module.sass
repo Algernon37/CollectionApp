@@ -17,7 +17,36 @@
     align-items: center
     gap: 15px
     width: 100%
+
+.imageContainer
+    max-width: 500px
+    max-height: 500px
+    display: flex
+    justify-content: center
+    align-items: center
+    overflow: hidden
+
+    &__img
+        width: 100%
+        height: auto
+        object-fit: contain
+
+.markdownPreview
+    max-width: 100%
+    word-wrap: break-word
     
 @media (max-width: 320px)
     .wrapper
         width: 300px
+
+@media (max-width: 768px)
+
+    .imageContainer
+        max-width: 300px
+        max-height: 300px
+
+@media (max-width: 420px)
+
+    .imageContainer
+        max-width: 200px
+        max-height: 200px

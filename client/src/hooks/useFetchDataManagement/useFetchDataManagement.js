@@ -206,7 +206,8 @@ const useFetchDataManagement = (id) => {
         saveFieldName,
         newFieldName,
         setNewFieldName,
-        currentUserId
+        currentUserId,
+        fetchCollectionAndItemsData
     };
 };
 

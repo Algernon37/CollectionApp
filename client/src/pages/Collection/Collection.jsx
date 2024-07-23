@@ -28,6 +28,7 @@ function Collection() {
     setNewFieldName,
     saveFieldName,
     currentUserId,
+    fetchCollectionAndItemsData
   } = useFetchDataManagement(id);
 
   if (!collectionData) {
@@ -41,7 +42,7 @@ function Collection() {
       <CollectionInfo collectionData={collectionData} />
       {isOwner && (
         <>
-          <FormChangeCollection collectionRef={collectionRef} collectionId={id} />
+          <FormChangeCollection collectionRef={collectionRef} collectionId={id} fetchCollectionAndItemsData={fetchCollectionAndItemsData}/>
           <div className={style.forms}>
             <AddItemForm
               collectionId={id}
