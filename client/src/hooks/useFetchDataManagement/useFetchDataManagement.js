@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { db, getDoc, doc, collection, getDocs, updateDoc } from '../../firebaseConfig';
+import { auth, db, getDoc, doc, collection, getDocs, updateDoc } from '../../firebaseConfig';
 
 const useFetchDataManagement = (id) => {
     const [collectionData, setCollectionData] = useState(null);
@@ -11,6 +11,7 @@ const useFetchDataManagement = (id) => {
     const [editingFields, setEditingFields] = useState({});
     const [newFieldName, setNewFieldName] = useState('');
     const [itemsChanged, setItemsChanged] = useState(false);
+    const [currentUserId, setCurrentUserId] = useState(null);
 
     const collectionRef = useMemo(() => doc(db, 'collections', id), [id]);
     const itemsRef = useMemo(() => collection(collectionRef, 'items'), [collectionRef]);
@@ -34,8 +35,20 @@ const useFetchDataManagement = (id) => {
         }
     };
 
+    const fetchCurrentUser = () => {
+        const user = auth.currentUser;
+        if (user) {
+            console.log('Current User ID:', user.uid);
+            setCurrentUserId(user.uid);
+        } else {
+            console.log('No user is currently authenticated.');
+            setCurrentUserId(null);
+        }
+    };
+    
     useEffect(() => {
         fetchCollectionAndItemsData();
+        fetchCurrentUser();
     }, [id, itemsChanged]);
 
     const fetchItems = () => {
@@ -193,6 +206,7 @@ const useFetchDataManagement = (id) => {
         saveFieldName,
         newFieldName,
         setNewFieldName,
+        currentUserId
     };
 };
 

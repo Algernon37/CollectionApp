@@ -57,7 +57,6 @@ const useCollectionManagement = () => {
                 await uploadBytes(imageRef, image);
                 imageUrl = await getDownloadURL(imageRef);
             }
-            console.log(auth.currentUser);
             await addDoc(collectionsRef, {
                 name: newCollectionName,
                 userId: auth.currentUser.uid,
@@ -65,7 +64,7 @@ const useCollectionManagement = () => {
                 theme: otherTheme ? otherTheme : newTheme,
                 imageUrl: imageUrl,
                 tableFields: [],
-                author: auth.currentUser.email || 'Unknown',
+                author:  auth.currentUser.displayName || auth.currentUser.email,
                 fieldLimits: {
                     string: 3,
                     integer: 3,

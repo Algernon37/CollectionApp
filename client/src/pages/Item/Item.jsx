@@ -15,6 +15,7 @@ const Item = () => {
         handleDeleteItem,
         handleBooleanItemChange,
         booleanFields,
+        isOwner
     } = useFetchItemData(id, itemId);
 
     if (!itemData) {
@@ -75,13 +76,20 @@ const Item = () => {
                 <tbody>
                     <tr>
                         {collectionFields.map((field, index) => (
-                            <td key={index}>{getFieldControl(field)}</td>
+                            <td key={index}>
+                                {isOwner ? getFieldControl(field) : editableFields[field.name]} 
+                            </td>
                         ))}
                     </tr>
                 </tbody>
+
             </Table>
-            <Button onClick={handleSave} variant="primary">Save Item</Button>
-            <Button onClick={handleDeleteItem} variant="primary">Delete Item</Button>
+            {isOwner ? (
+                <>
+                    <Button onClick={handleSave} variant="primary">Save Item</Button>
+                    <Button onClick={handleDeleteItem} variant="danger">Delete Item</Button>
+                </>
+            ) : null}
             <Button as={Link} to={`/collection/${id}`} variant="primary">Back to Collection</Button>
         </div>
     );

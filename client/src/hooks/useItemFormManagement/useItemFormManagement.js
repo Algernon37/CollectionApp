@@ -27,6 +27,7 @@ const useItemFormManagement = (collectionId, fetchItems) => {
                     createdAt: new Date(),
                     updatedAt: new Date(),
                     collectionName: collectionData.name,
+                    collectionId: collectionDoc.id,
                     createdBy: auth.currentUser.displayName || auth.currentUser.email
                 };
                 const itemRef = await addDoc(collection(db, `collections/${collectionId}/items`), newItem);

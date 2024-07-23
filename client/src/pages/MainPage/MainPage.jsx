@@ -19,30 +19,39 @@ function MainPage() {
     }
 
     return (
-        <div>
-            <h1>Main Page</h1>
+        <div className={style.wrapper}>
+            <h1 className={style.title}>Main Page</h1>
             <section>
-                <h2>
+                <h2 className={style.title}>
                     Latest created items
                 </h2>
-                <ul>
+                <ul className={style.itemsList}>
                     {latestItems.map(item => (
-                        <li key={item.id}>
+                        <li className={style.itemBox} key={item.id}>
                             <p>Name: {item.name}</p>
-                            <p>From collection: {item.collectionName}</p>
+                            <p>
+                                From collection:
+                                <Link to={`/collection/${item.collectionId}`}>
+                                    {item.collectionName}
+                                </Link>
+                            </p>
                             <p>Author: {item.createdBy}</p>
                         </li>
                     ))}
                 </ul>
             </section>
             <section>
-                <h2>
+                <h2 className={style.title}>
                     Largest collections
                 </h2>
-                <ul>
+                <ul className={style.collectionsList}>
                     {largestCollections.map(collection => (
-                        <li key={collection.id}>
-                            <p>Name: {collection.name}</p>
+                        <li key={collection.id} className={style.collectionBox}>
+                            <p>
+                                <Link to={`/collection/${collection.id}`}>
+                                    {collection.name}
+                                </Link>
+                            </p>
                         </li>
                     ))}
                 </ul>
@@ -59,3 +68,4 @@ function MainPage() {
 };
 
 export default MainPage;
+

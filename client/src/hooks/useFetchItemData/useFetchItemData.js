@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import { db, getDoc, doc, updateDoc, deleteDoc } from '../../firebaseConfig';
+import { auth, db, getDoc, doc, updateDoc, deleteDoc } from '../../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
 const useFetchItemData = (id, itemId) => {
@@ -8,6 +8,8 @@ const useFetchItemData = (id, itemId) => {
     const [editableFields, setEditableFields] = useState({});
     const [booleanFields, setBooleanFields] = useState({});
     const [updatedAt, setUpdatedAt] = useState(null);
+    const [collectionData, setCollectionData] = useState(null);
+    const [isOwner, setIsOwner] = useState(false);
     const navigate = useNavigate();
 
     const collectionRef = useMemo(() => doc(db, 'collections', id), [id]);
@@ -18,8 +20,11 @@ const useFetchItemData = (id, itemId) => {
             try {
                 const collectionDoc = await getDoc(collectionRef);
                 if (collectionDoc.exists()) {
-                    const collectionData = collectionDoc.data();
-                    setCollectionFields(collectionData.tableFields || []);
+                    const data = collectionDoc.data();
+                    setCollectionData(data);
+                    setCollectionFields(data.tableFields || []);
+                    const currentUserId = auth.currentUser ? auth.currentUser.uid : null;
+                    setIsOwner(data.userId === currentUserId);
                 } else {
                     console.log('Коллекция не найдена');
                 }
@@ -42,6 +47,7 @@ const useFetchItemData = (id, itemId) => {
             await deleteDoc(itemRef);
             const collectionDoc = await getDoc(collectionRef);
             const collectionData = collectionDoc.data();
+            setCollectionData(collectionData);
             const currentItemCount = collectionData.itemCount || 0;
             const newCount = currentItemCount - 1;
             await updateDoc(collectionRef, { itemCount: newCount });
@@ -82,7 +88,8 @@ const useFetchItemData = (id, itemId) => {
         handleFormItemChange,
         handleDeleteItem,
         handleBooleanItemChange,
-        booleanFields
+        booleanFields,
+        isOwner
     };
 };
 
