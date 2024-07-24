@@ -10,7 +10,7 @@ function UserCollections() {
         deleteCollection, handleSignOut, handleGoToMain,
         setNewCollectionName, setNewDescription, setNewTheme, setOtherTheme,
         toggleForm } = useCollectionManagement();
-
+        handleImageChange
     if (loading) {
         return <h2>Loading...</h2>;
     }

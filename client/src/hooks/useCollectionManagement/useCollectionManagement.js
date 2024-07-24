@@ -1,4 +1,4 @@
-import { db, auth, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, ref, uploadBytes, getDownloadURL, storage } from "../../firebaseConfig";
+import { db, auth, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, ref, uploadBytes, getDownloadURL, storage, deleteObject, getDoc } from "../../firebaseConfig";
 import { useEffect, useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
@@ -64,7 +64,7 @@ const useCollectionManagement = () => {
                 theme: otherTheme ? otherTheme : newTheme,
                 imageUrl: imageUrl,
                 tableFields: [],
-                author:  auth.currentUser.displayName || auth.currentUser.email,
+                author: auth.currentUser.displayName || auth.currentUser.email,
                 fieldLimits: {
                     string: 3,
                     integer: 3,
@@ -96,6 +96,16 @@ const useCollectionManagement = () => {
                 batch.delete(doc.ref);
             });
             await batch.commit();
+            const collectionDoc = await getDoc(collectionRef);
+            if (collectionDoc.exists()) {
+                const collectionData = collectionDoc.data();
+                const imageUrl = collectionData.imageUrl;
+                if (imageUrl) {
+                    const imageRef = ref(storage, imageUrl);
+                    await deleteObject(imageRef);
+                    console.log(`Image deleted: ${imageUrl}`);
+                }
+            }
             await deleteDoc(collectionRef);
             loadCollections();
             console.log(`Collection and its subcollections have been deleted: ${collectionId}`);

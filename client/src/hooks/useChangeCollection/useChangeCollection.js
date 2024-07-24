@@ -51,24 +51,20 @@ const useChangeCollection = (collectionId, collectionRef, fetchCollectionAndItem
         if (image) {
             imageUrl = await uploadImage(image);
         }
-
         const newData = {
             name: otherTheme ? otherTheme : newTheme,
             description: newDescription,
             theme: newTheme,
             imageUrl
         };
-
         try {
             await editCollection(collectionId, newData);
             fetchCollectionAndItemsData();
         } catch (error) {
             console.error('Error updating collection:', error);
         }
-
         toggleForm();
     };
-
 
     const editCollection = async (collectionId, newData) => {
         try {

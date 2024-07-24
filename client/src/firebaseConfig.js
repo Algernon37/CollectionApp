@@ -1,7 +1,10 @@
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
-import { collection, getFirestore, addDoc, getDoc, getDocs, deleteDoc, doc, query, where, writeBatch, updateDoc, limit, orderBy } from "firebase/firestore";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, getFirestore, 
+  addDoc, getDoc, getDocs, deleteDoc,
+   doc, query, where, writeBatch, 
+   updateDoc, limit, orderBy } from "firebase/firestore";
+import { getStorage, ref, uploadBytes, getDownloadURL,deleteObject } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyALxxrDGTZ2EDK5Ts8B5Ef28OGRBE-cY4c",
@@ -19,4 +22,10 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const storage = getStorage(app);
 
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, db, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, getDoc, updateDoc, storage, ref, uploadBytes, getDownloadURL, limit, orderBy };
+export { auth, createUserWithEmailAndPassword, 
+  signInWithEmailAndPassword, 
+  db, collection, addDoc, getDocs, 
+  deleteDoc, doc, query, where, 
+  writeBatch, getDoc, updateDoc, 
+  storage, ref, uploadBytes, 
+  getDownloadURL, limit, orderBy,deleteObject };

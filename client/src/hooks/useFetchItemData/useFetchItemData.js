@@ -8,7 +8,6 @@ const useFetchItemData = (id, itemId) => {
     const [editableFields, setEditableFields] = useState({});
     const [booleanFields, setBooleanFields] = useState({});
     const [updatedAt, setUpdatedAt] = useState(null);
-    const [collectionData, setCollectionData] = useState(null);
     const [isOwner, setIsOwner] = useState(false);
     const navigate = useNavigate();
 
@@ -21,7 +20,6 @@ const useFetchItemData = (id, itemId) => {
                 const collectionDoc = await getDoc(collectionRef);
                 if (collectionDoc.exists()) {
                     const data = collectionDoc.data();
-                    setCollectionData(data);
                     setCollectionFields(data.tableFields || []);
                     const currentUserId = auth.currentUser ? auth.currentUser.uid : null;
                     setIsOwner(data.userId === currentUserId);
@@ -47,7 +45,6 @@ const useFetchItemData = (id, itemId) => {
             await deleteDoc(itemRef);
             const collectionDoc = await getDoc(collectionRef);
             const collectionData = collectionDoc.data();
-            setCollectionData(collectionData);
             const currentItemCount = collectionData.itemCount || 0;
             const newCount = currentItemCount - 1;
             await updateDoc(collectionRef, { itemCount: newCount });
