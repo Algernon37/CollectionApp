@@ -1,6 +1,6 @@
 import { db, auth, collection, addDoc, getDocs, deleteDoc, doc, query, where, writeBatch, ref, uploadBytes, getDownloadURL, storage, deleteObject, getDoc } from "../../firebaseConfig";
 import { useEffect, useState } from 'react';
-import { signOut } from 'firebase/auth';
+import { signOut } from '../../firebaseConfig';
 import { useNavigate } from 'react-router-dom';
 
 const useCollectionManagement = () => {
